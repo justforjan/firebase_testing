@@ -12,11 +12,13 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
   User? _user;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _auth.authStateChanges().listen((event) {
       setState(() {
@@ -29,7 +31,45 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: const Text("Google SignIn")),
-        body: _user != null ? _userInfo() : _googleSignInButton());
+        body: _user != null ? _userInfo() : loginPage());
+  }
+
+  Widget loginPage() {
+    return Center(
+      child: Column(
+        children: [
+          // const Image(image: AssetImage('assets/logo.png')),
+          Padding(
+              padding: const EdgeInsets.all(10),
+              child: TextField(
+                  controller: emailController,
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.email),
+                      hintText: "Enter your email address"))),
+          Padding(
+              padding: const EdgeInsets.all(10),
+              child: TextField(
+                controller: passwordController,
+                obscureText: true,
+                decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.password),
+                    hintText: "Enter your password"),
+              )),
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child:
+                ElevatedButton(onPressed: () {}, child: const Text("Log in")),
+          ),
+          Padding(
+              padding: const EdgeInsets.all(10),
+              child:
+                  TextButton(onPressed: () {}, child: const Text("Register"))),
+          _googleSignInButton()
+        ],
+      ),
+    );
   }
 
   Widget _googleSignInButton() {
@@ -57,9 +97,10 @@ class _HomePageState extends State<HomePage> {
           Text(_user!.email!),
           Text(_user!.displayName ?? ""),
           MaterialButton(
-              color: Colors.red,
-              child: const Text("Sign Out"),
-              onPressed: _auth.signOut)
+            color: Colors.red,
+            onPressed: _auth.signOut,
+            child: const Text("Sign Out"),
+          )
         ],
       ),
     );
