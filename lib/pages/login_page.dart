@@ -16,8 +16,10 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   // text editing
   final emailController = TextEditingController();
-
   final passwordController = TextEditingController();
+
+  // form
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   // sign user in method
   void signUserIn() async {
@@ -41,16 +43,7 @@ class _LoginPageState extends State<LoginPage> {
       if (mounted) {
         Navigator.pop(context);
       }
-      // WRONG EMAIL
-      if (e.code == 'user-not-found') {
-        print("user not found");
-        showErrorMessage("user not found");
-      }
-      // WRONG PASSWORD
-      else if (e.code == 'wrong-password') {
-        print("wrong password");
-        showErrorMessage("wrong password");
-      }
+      showErrorMessage(e.code);
     }
   }
 
@@ -74,33 +67,29 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(
-                height: 50,
-              ),
               // logo
-              const Icon(
-                Icons.lock,
-                size: 100,
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 50.0),
+                child: Icon(
+                  Icons.lock,
+                  size: 100,
+                ),
               ),
-              const SizedBox(
-                height: 50,
-              ),
+
               // welcome back
-              Text(
-                "Welcome back you've been missed!",
-                style: TextStyle(color: Colors.grey[700], fontSize: 16),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 10),
+                child: Text(
+                  "Welcome back you've been missed!",
+                  style: TextStyle(color: Colors.grey[700], fontSize: 16),
+                ),
               ),
-              const SizedBox(
-                height: 25,
-              ),
+
               // username textfield
               MyTextField(
                 controller: emailController,
                 hintText: "Email",
                 obscureText: false,
-              ),
-              const SizedBox(
-                height: 10,
               ),
 
               // password textfield
@@ -109,12 +98,11 @@ class _LoginPageState extends State<LoginPage> {
                 hintText: "Password",
                 obscureText: true,
               ),
-              const SizedBox(
-                height: 10,
-              ),
+
               // forgot password
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 27.0),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 27.0, vertical: 5.0),
                 child: Align(
                   alignment: Alignment.centerRight,
                   child: Text(
@@ -123,21 +111,17 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 25,
-              ),
+
               // sign in button
               MyButton(
                 onTap: signUserIn,
                 buttonText: "Sign in",
               ),
-              const SizedBox(
-                height: 25,
-              ),
 
               // or connect via
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 25.0, vertical: 5.0),
                 child: Row(
                   children: [
                     Expanded(

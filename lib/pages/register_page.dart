@@ -47,16 +47,7 @@ class _RegisterPageState extends State<RegisterPage> {
       if (mounted) {
         Navigator.pop(context);
       }
-      // WRONG EMAIL
-      if (e.code == 'user-not-found') {
-        print("user not found");
-        showErrorMessage("user not found");
-      }
-      // WRONG PASSWORD
-      else if (e.code == 'wrong-password') {
-        print("wrong password");
-        showErrorMessage("wrong password");
-      }
+      showErrorMessage(e.code);
     }
   }
 
@@ -105,18 +96,12 @@ class _RegisterPageState extends State<RegisterPage> {
                 hintText: "Email",
                 obscureText: false,
               ),
-              const SizedBox(
-                height: 10,
-              ),
 
               // password textfield
               MyTextField(
                 controller: passwordController,
                 hintText: "Password",
                 obscureText: true,
-              ),
-              const SizedBox(
-                height: 10,
               ),
 
               // confirm password textfield
@@ -125,16 +110,11 @@ class _RegisterPageState extends State<RegisterPage> {
                 hintText: "Password",
                 obscureText: true,
               ),
-              const SizedBox(
-                height: 10,
-              ),
+
               // sign in button
               MyButton(
                 onTap: signUserUp,
                 buttonText: "Sign up",
-              ),
-              const SizedBox(
-                height: 25,
               ),
 
               // or connect via
