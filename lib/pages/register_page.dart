@@ -3,6 +3,7 @@ import 'package:firebase_testing/components/3rd_party_auth.dart';
 import 'package:firebase_testing/components/my_button.dart';
 import 'package:firebase_testing/components/my_texfield.dart';
 import 'package:firebase_testing/components/square_tile.dart';
+import 'package:firebase_testing/services/regex_service.dart';
 import 'package:flutter/material.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -16,9 +17,11 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   // text editing
   final emailController = TextEditingController();
-
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+
+  // Form necessities
+  final _registerFormKey = GlobalKey<FormState>();
 
   // sign user in method
   void signUserUp() async {
@@ -32,11 +35,9 @@ class _RegisterPageState extends State<RegisterPage> {
     // try sign up
     try {
       // check if password in confirmed
-      if (passwordController.text == confirmPasswordController.text) {
+      if (_registerFormKey.currentState!.validate()) {
         await FirebaseAuth.instance.createUserWithEmailAndPassword(
             email: emailController.text, password: passwordController.text);
-      } else {
-        showErrorMessage("Passwords not not match");
       }
       // pop the loading indicator
       if (mounted) {
@@ -60,6 +61,13 @@ class _RegisterPageState extends State<RegisterPage> {
             return AlertDialog(title: Text(message));
           });
     });
+  }
+
+  String? passwordsMatch(String? value) {
+    if (passwordController.text != confirmPasswordController.text) {
+      return "Passwords do not match";
+    }
+    return null;
   }
 
   @override
@@ -90,31 +98,47 @@ class _RegisterPageState extends State<RegisterPage> {
               const SizedBox(
                 height: 25,
               ),
-              // username textfield
-              MyTextField(
-                controller: emailController,
-                hintText: "Email",
-                obscureText: false,
-              ),
+              // email textfield
+              Form(
+                key: _registerFormKey,
+                child: Column(
+                  children: [
+                    MyTextField(
+                      controller: emailController,
+                      hintText: "Email",
+                      obscureText: false,
+                      textInputType: TextInputType.emailAddress,
+                      validationFunction: (value) {
+                        if (!RegexService().isEmail(value)) {
+                          return "This is not a valid email address";
+                        }
+                        return null;
+                      },
+                    ),
 
-              // password textfield
-              MyTextField(
-                controller: passwordController,
-                hintText: "Password",
-                obscureText: true,
-              ),
+                    // password textfield
+                    MyTextField(
+                      controller: passwordController,
+                      hintText: "Password",
+                      obscureText: true,
+                      validationFunction: passwordsMatch,
+                    ),
 
-              // confirm password textfield
-              MyTextField(
-                controller: confirmPasswordController,
-                hintText: "Password",
-                obscureText: true,
-              ),
+                    // confirm password textfield
+                    MyTextField(
+                      controller: confirmPasswordController,
+                      hintText: "Password",
+                      obscureText: true,
+                      validationFunction: passwordsMatch,
+                    ),
 
-              // sign in button
-              MyButton(
-                onTap: signUserUp,
-                buttonText: "Sign up",
+                    // sign in button
+                    MyButton(
+                      onTap: signUserUp,
+                      buttonText: "Sign up",
+                    ),
+                  ],
+                ),
               ),
 
               // or connect via

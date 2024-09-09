@@ -3,6 +3,7 @@ import 'package:firebase_testing/components/3rd_party_auth.dart';
 import 'package:firebase_testing/components/my_button.dart';
 import 'package:firebase_testing/components/my_texfield.dart';
 import 'package:firebase_testing/components/square_tile.dart';
+import 'package:firebase_testing/services/regex_service.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -19,7 +20,7 @@ class _LoginPageState extends State<LoginPage> {
   final passwordController = TextEditingController();
 
   // form
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
 
   // sign user in method
   void signUserIn() async {
@@ -32,8 +33,10 @@ class _LoginPageState extends State<LoginPage> {
 
     // try sign in
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: emailController.text, password: passwordController.text);
+      if (_loginFormKey.currentState!.validate()) {
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+            email: emailController.text, password: passwordController.text);
+      }
       // pop the loading indicator
       if (mounted) {
         Navigator.pop(context);
@@ -85,18 +88,32 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
 
-              // username textfield
-              MyTextField(
-                controller: emailController,
-                hintText: "Email",
-                obscureText: false,
-              ),
+              Form(
+                key: _loginFormKey,
+                child: Column(
+                  children: [
+                    // email textfield
+                    MyTextField(
+                      controller: emailController,
+                      hintText: "Email",
+                      obscureText: false,
+                      textInputType: TextInputType.emailAddress,
+                      validationFunction: (value) {
+                        if (!RegexService().isEmail(value)) {
+                          return "This is not a valid email address";
+                        }
+                        return null;
+                      },
+                    ),
 
-              // password textfield
-              MyTextField(
-                controller: passwordController,
-                hintText: "Password",
-                obscureText: true,
+                    // password textfield
+                    MyTextField(
+                      controller: passwordController,
+                      hintText: "Password",
+                      obscureText: true,
+                    ),
+                  ],
+                ),
               ),
 
               // forgot password
