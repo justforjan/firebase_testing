@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_testing/components/my_button.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
