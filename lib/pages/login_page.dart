@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_testing/components/3rd_party_auth.dart';
 import 'package:firebase_testing/components/my_button.dart';
 import 'package:firebase_testing/components/my_texfield.dart';
+import 'package:firebase_testing/services/auth_services.dart';
 import 'package:firebase_testing/services/regex_service.dart';
 import 'package:flutter/material.dart';
 
@@ -33,8 +34,8 @@ class _LoginPageState extends State<LoginPage> {
     // try sign in
     try {
       if (_loginFormKey.currentState!.validate()) {
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
-            email: emailController.text, password: passwordController.text);
+        await AuthServices().signInWithEmailAndPassword(
+            emailController.text, passwordController.text);
       }
       // pop the loading indicator
       if (mounted) {

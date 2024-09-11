@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_testing/components/3rd_party_auth.dart';
 import 'package:firebase_testing/components/my_button.dart';
 import 'package:firebase_testing/components/my_texfield.dart';
+import 'package:firebase_testing/services/auth_services.dart';
 import 'package:firebase_testing/services/regex_service.dart';
 import 'package:flutter/material.dart';
 
@@ -35,8 +36,8 @@ class _RegisterPageState extends State<RegisterPage> {
     try {
       // check if password in confirmed
       if (_registerFormKey.currentState!.validate()) {
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
-            email: emailController.text, password: passwordController.text);
+        await AuthServices().createUserWithEmailAndPassword(
+            emailController.text, passwordController.text);
       }
       // pop the loading indicator
       if (mounted) {
