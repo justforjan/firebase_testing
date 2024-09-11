@@ -179,8 +179,8 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: widget.onTap,
                       child: const Text(
                         "Register now",
-                        style: TextStyle(
-                            color: Colors.blue, fontWeight: FontWeight.bold),
+                        // style: TextStyle(
+                        //     color: Colors.blue, fontWeight: FontWeight.bold),
                       ))
                 ],
               )
