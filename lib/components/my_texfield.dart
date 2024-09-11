@@ -31,8 +31,8 @@ class MyTextField extends StatelessWidget {
             enabledBorder: const OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.white)),
             focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey.shade400)),
-            fillColor: Colors.grey.shade200,
+                borderSide:
+                    BorderSide(color: Theme.of(context).colorScheme.primary)),
             filled: true,
             hintText: hintText,
             hintStyle: TextStyle(color: Colors.grey[500])),
