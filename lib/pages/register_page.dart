@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_testing/components/3rd_party_auth.dart';
+import 'package:firebase_testing/components/helper_components.dart';
 import 'package:firebase_testing/components/my_button.dart';
 import 'package:firebase_testing/components/my_texfield.dart';
 import 'package:firebase_testing/services/auth_services.dart';
@@ -103,6 +104,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 key: _registerFormKey,
                 child: Column(
                   children: [
+                    addVerticalSpace(10),
                     MyTextField(
                       controller: emailController,
                       hintText: "Email",
@@ -115,7 +117,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         return null;
                       },
                     ),
-
+                    addVerticalSpace(10),
                     // password textfield
                     MyTextField(
                       controller: passwordController,
@@ -123,7 +125,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       obscureText: true,
                       validationFunction: passwordsMatch,
                     ),
-
+                    addVerticalSpace(10),
                     // confirm password textfield
                     MyTextField(
                       controller: confirmPasswordController,
@@ -131,7 +133,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       obscureText: true,
                       validationFunction: passwordsMatch,
                     ),
-
+                    addVerticalSpace(10),
                     // sign in button
                     MyButton(
                       onTap: signUserUp,
@@ -140,7 +142,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ],
                 ),
               ),
-
+              addVerticalSpace(10),
               // or connect via
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),

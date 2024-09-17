@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_testing/components/3rd_party_auth.dart';
+import 'package:firebase_testing/components/helper_components.dart';
 import 'package:firebase_testing/components/my_button.dart';
 import 'package:firebase_testing/components/my_texfield.dart';
 import 'package:firebase_testing/services/auth_services.dart';
@@ -92,6 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                 key: _loginFormKey,
                 child: Column(
                   children: [
+                    addVerticalSpace(10),
                     // email textfield
                     MyTextField(
                       controller: emailController,
@@ -105,7 +107,7 @@ class _LoginPageState extends State<LoginPage> {
                         return null;
                       },
                     ),
-
+                    addVerticalSpace(10),
                     // password textfield
                     MyTextField(
                       controller: passwordController,

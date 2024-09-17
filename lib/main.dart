@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-            seedColor: Colors.orange, surface: Colors.grey[300]),
+            seedColor: Colors.purple, surface: Colors.grey[300]),
         // scaffoldBackgroundColor: Colors.grey[300],
         // textTheme: TextTheme(),
         useMaterial3: true,
