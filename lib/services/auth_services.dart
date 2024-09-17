@@ -34,4 +34,8 @@ class AuthServices {
     await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email, password: password);
   }
+
+  signUserOut() {
+    FirebaseAuth.instance.signOut();
+  }
 }
