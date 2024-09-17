@@ -17,21 +17,28 @@ class Group extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        addVerticalSpace(5),
-        Card(
-          child: ListTile(
-            onTap: openGroup,
-            leading: const Icon(Icons.group),
-            title: Text(groupName),
-            subtitle: Text(
-              saldo.toString(),
-              style: TextStyle(color: saldo < 0 ? Colors.red : Colors.green),
+    return Column(children: [
+      addVerticalSpace(5),
+      Card(
+        child: ListTile(
+          onTap: openGroup,
+          leading: const Icon(Icons.group),
+          title: Text(groupName),
+          subtitle: RichText(
+            text: TextSpan(
+              text: "Your balance: ",
+              style: DefaultTextStyle.of(context).style,
+              children: <TextSpan>[
+                TextSpan(
+                  text: saldo.toString(),
+                  style:
+                      TextStyle(color: saldo < 0 ? Colors.red : Colors.green),
+                )
+              ],
             ),
           ),
         ),
-      ],
-    );
+      ),
+    ]);
   }
 }

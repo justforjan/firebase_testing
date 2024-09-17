@@ -3,6 +3,11 @@ class ExpenseServices {
     print("Create group");
   }
 
-  joinGroup() {}
-  leaveGroup() {}
+  joinGroup() {
+    print("Join Group");
+  }
+
+  leaveGroup() {
+    print("Leave Group");
+  }
 }
