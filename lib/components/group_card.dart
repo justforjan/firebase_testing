@@ -1,17 +1,12 @@
+import 'package:firebase_testing/models/group.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_testing/components/helper_components.dart'
     show addVerticalSpace;
 
-class Group extends StatelessWidget {
-  final String groupName;
-  final double saldo;
-  final int groupID;
+class GroupCard extends StatelessWidget {
+  final Group group;
 
-  const Group(
-      {super.key,
-      required this.groupName,
-      required this.saldo,
-      required this.groupID});
+  const GroupCard({super.key, required this.group});
 
   void openGroup() {}
 
@@ -23,16 +18,16 @@ class Group extends StatelessWidget {
         child: ListTile(
           onTap: openGroup,
           leading: const Icon(Icons.group),
-          title: Text(groupName),
+          title: Text(group.name),
           subtitle: RichText(
             text: TextSpan(
               text: "Your balance: ",
               style: DefaultTextStyle.of(context).style,
               children: <TextSpan>[
                 TextSpan(
-                  text: saldo.toString(),
-                  style:
-                      TextStyle(color: saldo < 0 ? Colors.red : Colors.green),
+                  text: group.saldo.toString(),
+                  style: TextStyle(
+                      color: group.saldo < 0 ? Colors.red : Colors.green),
                 )
               ],
             ),

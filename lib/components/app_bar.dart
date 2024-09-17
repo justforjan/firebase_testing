@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_testing/pages/create_group.dart';
 import 'package:firebase_testing/services/expense_services.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +11,7 @@ class MyAppBar extends StatelessWidget implements PreferredSize {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      iconTheme: IconThemeData(color: Theme.of(context).colorScheme.onPrimary),
       backgroundColor: Theme.of(context).colorScheme.primary,
       title: Text(title,
           style: const TextStyle(
@@ -17,7 +19,12 @@ class MyAppBar extends StatelessWidget implements PreferredSize {
           )),
       actions: [
         IconButton(
-            onPressed: ExpenseServices().createGroup(),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const CreateGroup()),
+              );
+            },
             icon: const Icon(
               Icons.group_add,
               color: Colors.white,
