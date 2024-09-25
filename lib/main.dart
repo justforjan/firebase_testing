@@ -9,7 +9,7 @@ Future<void> main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   FirebaseFirestore.instance.settings =
-      const Settings(persistenceEnabled: true);
+      const Settings(persistenceEnabled: true); // to cache data on phone
 
   runApp(const MyApp());
 }

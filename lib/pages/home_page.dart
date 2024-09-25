@@ -5,11 +5,19 @@ import 'package:firebase_testing/components/helper_components.dart'
 import 'package:firebase_testing/components/my_button.dart';
 import 'package:firebase_testing/models/group.dart';
 import 'package:firebase_testing/pages/create_group.dart';
+import 'package:firebase_testing/services/database_services.dart';
 import 'package:firebase_testing/services/expense_services.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final DatabaseServices _dbServices = DatabaseServices();
 
   @override
   Widget build(BuildContext context) {
@@ -27,15 +35,13 @@ class HomePage extends StatelessWidget {
                 GroupCard(
                     group: Group(
                   name: "Albanien",
-                  id: 1,
-                  saldo: 5.6,
+                  total: 5.6,
                 )),
                 // Divider(),
                 GroupCard(
                     group: Group(
                   name: "Marokko",
-                  id: 2,
-                  saldo: -78.0,
+                  total: -78.0,
                 )),
                 addVerticalSpace(5),
                 MyButton(

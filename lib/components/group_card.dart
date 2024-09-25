@@ -21,13 +21,13 @@ class GroupCard extends StatelessWidget {
           title: Text(group.name),
           subtitle: RichText(
             text: TextSpan(
-              text: "Your balance: ",
+              text: "Total: ",
               style: DefaultTextStyle.of(context).style,
               children: <TextSpan>[
                 TextSpan(
-                  text: group.saldo.toString(),
+                  text: group.total.toString(),
                   style: TextStyle(
-                      color: group.saldo < 0 ? Colors.red : Colors.green),
+                      color: group.total < 0 ? Colors.red : Colors.green),
                 )
               ],
             ),
