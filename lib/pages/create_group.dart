@@ -59,6 +59,9 @@ class _CreateGroupState extends State<CreateGroup> {
                       if (value == null || value == "") {
                         return "Group name must not be empty";
                       }
+                      // if (value.length < 26) {
+                      //   return "Group names must not be longer than 26 characteres";
+                      // }
                       return null;
                     }),
                 addVerticalSpace(10),

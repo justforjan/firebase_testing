@@ -1,14 +1,21 @@
 import 'package:firebase_testing/models/group.dart';
+import 'package:firebase_testing/services/database_services.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_testing/components/helper_components.dart'
     show addVerticalSpace;
 
 class GroupCard extends StatelessWidget {
   final Group group;
+  final String groupID;
 
-  const GroupCard({super.key, required this.group});
+  GroupCard({super.key, required this.group, required this.groupID});
+
+  final DatabaseServices _dbServices = DatabaseServices();
 
   void openGroup() {}
+  void deleteGroup() {
+    _dbServices.deleteGroup(groupID);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +39,8 @@ class GroupCard extends StatelessWidget {
               ],
             ),
           ),
+          trailing: IconButton(
+              onPressed: deleteGroup, icon: const Icon(Icons.delete)),
         ),
       ),
     ]);

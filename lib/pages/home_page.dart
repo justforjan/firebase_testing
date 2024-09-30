@@ -62,7 +62,10 @@ class _HomePageState extends State<HomePage> {
                       itemCount: groups.length,
                       itemBuilder: (context, index) {
                         Group group = groups[index].data();
-                        return GroupCard(group: group);
+                        return GroupCard(
+                          group: group,
+                          groupID: groups[index].id,
+                        );
                       },
                     ),
                   );
