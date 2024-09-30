@@ -27,7 +27,7 @@ class _CreateGroupState extends State<CreateGroup> {
     try {
       if (_createGroupFormKey.currentState!.validate()) {
         Group newGroup = Group(
-            name: groupNameController.text,
+            name: groupNameController.text.trim(),
             total: 0,
             members: [_authServices.getCurrentUserID()],
             createdOn: Timestamp.now());
