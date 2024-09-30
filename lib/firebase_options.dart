@@ -67,4 +67,5 @@ class DefaultFirebaseOptions {
     iosClientId: '988144644924-5jjlfnp9avo459nptl56k5ns38mou8jq.apps.googleusercontent.com',
     iosBundleId: 'com.example.firebaseTesting',
   );
+
 }
