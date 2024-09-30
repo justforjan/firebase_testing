@@ -63,10 +63,9 @@ class DefaultFirebaseOptions {
     messagingSenderId: '988144644924',
     projectId: 'fir-testing-f8429',
     storageBucket: 'fir-testing-f8429.appspot.com',
-    androidClientId:
-        '988144644924-64ir1hln3r7fes0mbnvru30ni1op6o4d.apps.googleusercontent.com',
-    iosClientId:
-        '988144644924-5jjlfnp9avo459nptl56k5ns38mou8jq.apps.googleusercontent.com',
+    androidClientId: '988144644924-64ir1hln3r7fes0mbnvru30ni1op6o4d.apps.googleusercontent.com',
+    iosClientId: '988144644924-5jjlfnp9avo459nptl56k5ns38mou8jq.apps.googleusercontent.com',
     iosBundleId: 'com.example.firebaseTesting',
   );
+
 }

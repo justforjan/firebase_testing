@@ -2,11 +2,10 @@ import 'package:firebase_testing/components/app_bar.dart';
 import 'package:firebase_testing/components/group_card.dart';
 import 'package:firebase_testing/components/helper_components.dart'
     show addVerticalSpace;
-import 'package:firebase_testing/components/my_button.dart';
 import 'package:firebase_testing/models/group.dart';
 import 'package:firebase_testing/pages/create_group.dart';
+import 'package:firebase_testing/services/auth_services.dart';
 import 'package:firebase_testing/services/database_services.dart';
-import 'package:firebase_testing/services/expense_services.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -18,6 +17,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final DatabaseServices _dbServices = DatabaseServices();
+  final AuthServices _authServices = AuthServices();
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,8 @@ class _HomePageState extends State<HomePage> {
             children: [
               addVerticalSpace(10),
               StreamBuilder(
-                stream: _dbServices.getGroups(),
+                stream:
+                    _dbServices.getGroups(_authServices.auth.currentUser!.uid),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(

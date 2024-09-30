@@ -18,8 +18,12 @@ class DatabaseServices {
             toFirestore: (group, _) => group.toJson());
   }
 
-  Stream<QuerySnapshot> getGroups() {
-    return _groupsRef.snapshots();
+  // Stream<QuerySnapshot> getGroups() {
+  //   return _groupsRef.snapshots();
+  // }
+
+  Stream<QuerySnapshot> getGroups(String userId) {
+    return _groupsRef.where('members', arrayContains: userId).snapshots();
   }
 
   // Stream<List<Group>> getGroups() {
