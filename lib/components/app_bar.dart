@@ -17,17 +17,17 @@ class MyAppBar extends StatelessWidget implements PreferredSize {
             color: Colors.white,
           )),
       actions: [
-        IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const CreateGroup()),
-              );
-            },
-            icon: const Icon(
-              Icons.group_add,
-              color: Colors.white,
-            )),
+        // IconButton(
+        //     onPressed: () {
+        //       Navigator.push(
+        //         context,
+        //         MaterialPageRoute(builder: (context) => const CreateGroup()),
+        //       );
+        //     },
+        //     icon: const Icon(
+        //       Icons.group_add,
+        //       color: Colors.white,
+        //     )),
         IconButton(
             onPressed: () => FirebaseAuth.instance.signOut(),
             icon: const Icon(

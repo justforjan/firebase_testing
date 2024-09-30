@@ -26,40 +26,62 @@ class _HomePageState extends State<HomePage> {
         title: "Your Groups",
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                GroupCard(
-                    group: Group(
-                  name: "Albanien",
-                  total: 5.6,
-                )),
-                // Divider(),
-                GroupCard(
-                    group: Group(
-                  name: "Marokko",
-                  total: -78.0,
-                )),
-                addVerticalSpace(5),
-                MyButton(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const CreateGroup()),
-                      );
-                    },
-                    buttonText: "Create Group"),
-                addVerticalSpace(5),
-                MyButton(
-                    onTap: ExpenseServices().joinGroup,
-                    buttonText: "Join Group"),
-              ],
-            ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              addVerticalSpace(10),
+              StreamBuilder(
+                stream: _dbServices.getGroups(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+
+                  if (snapshot.hasError) {
+                    return const Center(
+                      child: Text("An error occurred."),
+                    );
+                  }
+
+                  List groups = snapshot.data?.docs ?? [];
+
+                  if (groups.isEmpty) {
+                    return const Center(
+                      child:
+                          Text("You have not joined or created a group yet."),
+                    );
+                  }
+
+                  return Expanded(
+                    child: ListView.builder(
+                      itemCount: groups.length,
+                      itemBuilder: (context, index) {
+                        Group group = groups[index].data();
+                        return GroupCard(group: group);
+                      },
+                    ),
+                  );
+                },
+              ),
+            ],
           ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const CreateGroup()),
+          );
+        },
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        child: const Icon(
+          Icons.group_add,
+          color: Colors.white,
         ),
       ),
     );

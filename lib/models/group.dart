@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:convert/convert.dart';
 
 class Group {
   String name;
@@ -11,10 +14,13 @@ class Group {
 
   Group.fromJson(Map<String, Object?> json)
       : this(
-            name: json['name']! as String,
-            total: json['total']! as double,
-            createdOn: json['createdOn']! as Timestamp,
-            members: json['members']! as List<String>);
+          name: json['name']! as String,
+          total: json['total']! as double,
+          createdOn: json['createdOn']! as Timestamp,
+          members: (json['members'] as List<dynamic>)
+              .map((e) => e as String)
+              .toList(),
+        );
 
   Group copyWith(
       {String? name,

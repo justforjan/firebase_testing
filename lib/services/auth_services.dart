@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthServices {
+  final FirebaseAuth auth = FirebaseAuth.instance;
   // signInWithGoogle_web() async {
   //   final GoogleAuthProvider googleAuthProvider = GoogleAuthProvider();
   //   return await FirebaseAuth.instance.signInWithProvider(googleAuthProvider);
@@ -37,5 +38,9 @@ class AuthServices {
 
   signUserOut() {
     FirebaseAuth.instance.signOut();
+  }
+
+  String getCurrentUserID() {
+    return auth.currentUser!.uid;
   }
 }
