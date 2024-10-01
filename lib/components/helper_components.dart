@@ -5,3 +5,14 @@ Widget addVerticalSpace(double space) {
     height: space,
   );
 }
+
+// error message to user
+void showErrorMessage(String message, BuildContext context) {
+  Future.delayed(Duration.zero, () {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(title: Text(message));
+        });
+  });
+}

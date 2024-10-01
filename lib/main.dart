@@ -13,15 +13,15 @@ Future<void> main() async {
   FirebaseFirestore.instance.settings =
       const Settings(persistenceEnabled: true); // to cache data on phone
 
-  if (kDebugMode) {
-    try {
-      FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
-      await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
-    } catch (e) {
-      // ignore: avoid_print
-      print(e);
-    }
-  }
+  // if (kDebugMode) {
+  //   try {
+  //     FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
+  //     await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
+  //   } catch (e) {
+  //     // ignore: avoid_print
+  //     print(e);
+  //   }
+  // }
 
   runApp(const MyApp());
 }
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Firebase Testing',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
             seedColor: Colors.purple, surface: Colors.grey[300]),

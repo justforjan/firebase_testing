@@ -17,12 +17,16 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   // text editing
+  final displayNameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
 
   // Form necessities
   final _registerFormKey = GlobalKey<FormState>();
+
+  // Services
+  final AuthServices _authServices = AuthServices();
 
   // sign user in method
   void signUserUp() async {
@@ -37,8 +41,8 @@ class _RegisterPageState extends State<RegisterPage> {
     try {
       // check if password in confirmed
       if (_registerFormKey.currentState!.validate()) {
-        await AuthServices().createUserWithEmailAndPassword(
-            emailController.text, passwordController.text);
+        await _authServices.createUserWithEmailAndPassword(emailController.text,
+            passwordController.text, displayNameController.text.trim());
       }
       // pop the loading indicator
       if (mounted) {
@@ -117,7 +121,18 @@ class _RegisterPageState extends State<RegisterPage> {
                         return null;
                       },
                     ),
-                    addVerticalSpace(10),
+                    // display name textfield
+                    MyTextField(
+                      controller: displayNameController,
+                      hintText: "Display name",
+                      obscureText: false,
+                      validationFunction: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "The display name must not be empty";
+                        }
+                      },
+                    ),
+                    addVerticalSpace(10), addVerticalSpace(10),
                     // password textfield
                     MyTextField(
                       controller: passwordController,

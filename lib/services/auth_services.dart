@@ -2,11 +2,20 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthServices {
-  final FirebaseAuth auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  User? user;
   // signInWithGoogle_web() async {
   //   final GoogleAuthProvider googleAuthProvider = GoogleAuthProvider();
   //   return await FirebaseAuth.instance.signInWithProvider(googleAuthProvider);
   // }
+
+  AuthServices() {
+    user = _auth.currentUser;
+  }
+
+  User? getCurrentUser() {
+    return user;
+  }
 
   signInWithGoogle() async {
     // Trigger the authentication flow
@@ -23,24 +32,32 @@ class AuthServices {
     );
 
     // Once signed in, return the UserCredential
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+    await _auth.signInWithCredential(credential);
   }
 
-  createUserWithEmailAndPassword(String email, String password) async {
-    await FirebaseAuth.instance
-        .createUserWithEmailAndPassword(email: email, password: password);
+  updateDisplayName(String displayName) {
+    if (user != null) {
+      user!.updateDisplayName(displayName);
+    }
+  }
+
+  createUserWithEmailAndPassword(
+      String email, String password, String displayName) async {
+    await _auth.createUserWithEmailAndPassword(
+        email: email, password: password);
+
+    updateDisplayName(displayName);
   }
 
   signInWithEmailAndPassword(String email, String password) async {
-    await FirebaseAuth.instance
-        .signInWithEmailAndPassword(email: email, password: password);
+    await _auth.signInWithEmailAndPassword(email: email, password: password);
   }
 
   signUserOut() {
-    FirebaseAuth.instance.signOut();
+    _auth.signOut();
   }
 
   String getCurrentUserID() {
-    return auth.currentUser!.uid;
+    return _auth.currentUser!.uid;
   }
 }

@@ -1,8 +1,10 @@
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Group {
   String name;
-  double total;
+  Float total;
   Timestamp? createdOn;
   List<String>? members;
 
@@ -12,7 +14,7 @@ class Group {
   Group.fromJson(Map<String, Object?> json)
       : this(
           name: json['name']! as String,
-          total: json['total']! as double,
+          total: json['total']! as Float,
           createdOn: json['createdOn']! as Timestamp,
           members: (json['members'] as List<dynamic>)
               .map((e) => e as String)
@@ -21,7 +23,7 @@ class Group {
 
   Group copyWith(
       {String? name,
-      double? total,
+      Float? total,
       Timestamp? createdOn,
       List<String>? members}) {
     return Group(

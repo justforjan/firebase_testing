@@ -32,9 +32,15 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               addVerticalSpace(10),
+              Text(
+                  "Hello ${_authServices.getCurrentUser()?.displayName ?? ''} "),
+              addVerticalSpace(10),
+              Text(
+                  "Your user id: ${_authServices.getCurrentUser()?.uid ?? ''} "),
+              addVerticalSpace(10),
               StreamBuilder(
                 stream:
-                    _dbServices.getGroups(_authServices.auth.currentUser!.uid),
+                    _dbServices.getGroups(_authServices.getCurrentUser()!.uid),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(

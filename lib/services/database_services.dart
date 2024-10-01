@@ -31,15 +31,40 @@ class DatabaseServices {
   //       (snapshot) => snapshot.docs.map((doc) => doc.data() as Group).toList());
   // }
 
-  void createGroup(Group group) {
-    _groupsRef.add(group);
+  Future<void> createGroup(Group group) async {
+    try {
+      await _groupsRef
+          .add(group); // Use 'await' to wait for the operation to complete
+    } on FirebaseException catch (e) {
+      // Catch Firestore-specific errors
+      print("Error: ${e.code}");
+    } catch (e) {
+      // Catch other exceptions
+      print("An unexpected error occurred: $e");
+    }
   }
 
-  void updateGroup(String groupID, Group group) {
-    _groupsRef.doc(groupID).update(group.toJson());
+  Future<void> updateGroup(String groupID, Group group) async {
+    try {
+      await _groupsRef.doc(groupID).update(group.toJson());
+    } on FirebaseException catch (e) {
+      // Catch Firestore-specific errors
+      print("Error: ${e.code}");
+    } catch (e) {
+      // Catch other exceptions
+      print("An unexpected error occurred: $e");
+    }
   }
 
-  void deleteGroup(String groupID) {
-    _groupsRef.doc(groupID).delete();
+  Future<void> deleteGroup(String groupID) async {
+    try {
+      await _groupsRef.doc(groupID).delete();
+    } on FirebaseException catch (e) {
+      // Catch Firestore-specific errors
+      print("Error: ${e.code}");
+    } catch (e) {
+      // Catch other exceptions
+      print("An unexpected error occurred: $e");
+    }
   }
 }
