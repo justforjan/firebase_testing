@@ -1,15 +1,18 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_testing/models/member.dart';
+import 'package:firebase_testing/services/database_services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthServices {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final DatabaseServices _db = DatabaseServices();
   User? user;
-  // signInWithGoogle_web() async {
-  //   final GoogleAuthProvider googleAuthProvider = GoogleAuthProvider();
-  //   return await FirebaseAuth.instance.signInWithProvider(googleAuthProvider);
-  // }
 
   AuthServices() {
+    updateUser();
+  }
+
+  updateUser() {
     user = _auth.currentUser;
   }
 
@@ -35,18 +38,16 @@ class AuthServices {
     await _auth.signInWithCredential(credential);
   }
 
-  updateDisplayName(String displayName) {
-    if (user != null) {
-      user!.updateDisplayName(displayName);
-    }
-  }
-
   createUserWithEmailAndPassword(
       String email, String password, String displayName) async {
     await _auth.createUserWithEmailAndPassword(
         email: email, password: password);
 
-    updateDisplayName(displayName);
+    updateUser();
+
+    Member member = Member(displayName: displayName);
+
+    _db.createOrUpdateMember(getCurrentUserID(), member);
   }
 
   signInWithEmailAndPassword(String email, String password) async {

@@ -109,6 +109,19 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: Column(
                   children: [
                     addVerticalSpace(10),
+                    // display name textfield
+                    MyTextField(
+                      controller: displayNameController,
+                      hintText: "Display name",
+                      obscureText: false,
+                      validationFunction: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "The display name must not be empty";
+                        }
+                      },
+                    ),
+                    addVerticalSpace(10),
+                    // Email address textfield
                     MyTextField(
                       controller: emailController,
                       hintText: "Email",
@@ -121,18 +134,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         return null;
                       },
                     ),
-                    // display name textfield
-                    MyTextField(
-                      controller: displayNameController,
-                      hintText: "Display name",
-                      obscureText: false,
-                      validationFunction: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "The display name must not be empty";
-                        }
-                      },
-                    ),
-                    addVerticalSpace(10), addVerticalSpace(10),
+                    addVerticalSpace(10),
                     // password textfield
                     MyTextField(
                       controller: passwordController,
