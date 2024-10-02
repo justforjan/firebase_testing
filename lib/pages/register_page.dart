@@ -118,6 +118,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         if (value == null || value.isEmpty) {
                           return "The display name must not be empty";
                         }
+                        return null;
                       },
                     ),
                     addVerticalSpace(10),

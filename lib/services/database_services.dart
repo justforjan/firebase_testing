@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_testing/models/group.dart';
 import 'package:firebase_testing/models/member.dart';
-import 'package:firebase_testing/services/auth_services.dart';
 
 const String GROUP_COLLECTION_REF = "groups";
 const String MEMBER_COLLECTION_REF = "members";
