@@ -1,17 +1,17 @@
-class User {
+class Member {
   String displayName;
 
-  User({required this.displayName});
+  Member({required this.displayName});
 
-  User.fromJson(Map<String, Object?> json)
+  Member.fromJson(Map<String, Object?> json)
       : this(
           displayName: json['displayName']! as String,
         );
 
-  User copyWith({
+  Member copyWith({
     String? displayName,
   }) {
-    return User(
+    return Member(
       displayName: displayName ?? this.displayName,
     );
   }

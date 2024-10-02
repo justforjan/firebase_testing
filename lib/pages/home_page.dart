@@ -32,8 +32,7 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               addVerticalSpace(10),
-              Text(
-                  "Hello ${_authServices.getCurrentUser()?.displayName ?? ''} "),
+              const Text("Hello Unknown"),
               addVerticalSpace(10),
               Text(
                   "Your user id: ${_authServices.getCurrentUser()?.uid ?? ''} "),
