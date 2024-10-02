@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_testing/components/app_bar.dart';
 import 'package:firebase_testing/components/group_card.dart';
 import 'package:firebase_testing/components/helper_components.dart'
     show addVerticalSpace;
 import 'package:firebase_testing/models/group.dart';
+import 'package:firebase_testing/models/member.dart';
 import 'package:firebase_testing/pages/create_group.dart';
 import 'package:firebase_testing/services/auth_services.dart';
 import 'package:firebase_testing/services/database_services.dart';
@@ -19,6 +21,14 @@ class _HomePageState extends State<HomePage> {
   final DatabaseServices _dbServices = DatabaseServices();
   final AuthServices _authServices = AuthServices();
 
+  late final Future<DocumentSnapshot<Member?>?> memberSnapshot;
+
+  @override
+  void initState() {
+    memberSnapshot = _dbServices.getMember(_authServices.getCurrentUserID());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,10 +42,19 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               addVerticalSpace(10),
-              const Text("Hello Unknown"),
+              FutureBuilder(
+                  future: memberSnapshot,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      if (snapshot.hasData && snapshot.data != null) {
+                        var memberData = snapshot.data?.data();
+                        return Text("Hello ${memberData?.displayName}");
+                      }
+                    }
+                    return const Text("Hello Unknown");
+                  }),
               addVerticalSpace(10),
-              Text(
-                  "Your user id: ${_authServices.getCurrentUser()?.uid ?? ''} "),
+              Text("Your user id: ${_authServices.getCurrentUserID()} "),
               addVerticalSpace(10),
               StreamBuilder(
                 stream:

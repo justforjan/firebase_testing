@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_testing/models/group.dart';
 import 'package:firebase_testing/models/member.dart';
+import 'package:firebase_testing/services/auth_services.dart';
 
 const String GROUP_COLLECTION_REF = "groups";
 const String MEMBER_COLLECTION_REF = "members";
@@ -8,8 +9,8 @@ const String MEMBER_COLLECTION_REF = "members";
 class DatabaseServices {
   final _firestore = FirebaseFirestore.instance;
 
-  late final CollectionReference _groupsRef;
-  late final CollectionReference _membersRef;
+  late final CollectionReference<Group> _groupsRef;
+  late final CollectionReference<Member> _membersRef;
 
   DatabaseServices() {
     // the following makes sure that data is received from Firebase and sent to Firebase only any only in the format of a Group.
@@ -82,6 +83,22 @@ class DatabaseServices {
     } catch (e) {
       // Catch other exceptions
       print("An unexpected error occurred: $e");
+    }
+  }
+
+  Future<DocumentSnapshot<Member?>?> getMember(String memberID) async {
+    try {
+      var snapshot = await _membersRef.doc(memberID).get();
+
+      return snapshot; // snapshot.data() is of type Member?, snapshot.id is the id of the object
+    } on FirebaseException catch (e) {
+      // Catch Firestore-specific errors
+      print("Error: ${e.code}");
+      return null;
+    } catch (e) {
+      // Catch other exceptions
+      print("An unexpected error occurred: $e");
+      return null;
     }
   }
 }
