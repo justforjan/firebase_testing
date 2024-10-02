@@ -1,12 +1,24 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_testing/models/member.dart';
+import 'package:firebase_testing/services/database_services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthServices {
-  final FirebaseAuth auth = FirebaseAuth.instance;
-  // signInWithGoogle_web() async {
-  //   final GoogleAuthProvider googleAuthProvider = GoogleAuthProvider();
-  //   return await FirebaseAuth.instance.signInWithProvider(googleAuthProvider);
-  // }
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final DatabaseServices _db = DatabaseServices();
+  User? user;
+
+  AuthServices() {
+    updateUser();
+  }
+
+  updateUser() {
+    user = _auth.currentUser;
+  }
+
+  User? getCurrentUser() {
+    return user;
+  }
 
   signInWithGoogle() async {
     // Trigger the authentication flow
@@ -23,24 +35,30 @@ class AuthServices {
     );
 
     // Once signed in, return the UserCredential
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+    await _auth.signInWithCredential(credential);
   }
 
-  createUserWithEmailAndPassword(String email, String password) async {
-    await FirebaseAuth.instance
-        .createUserWithEmailAndPassword(email: email, password: password);
+  createUserWithEmailAndPassword(
+      String email, String password, String displayName) async {
+    await _auth.createUserWithEmailAndPassword(
+        email: email, password: password);
+
+    updateUser();
+
+    Member member = Member(displayName: displayName);
+
+    _db.createOrUpdateMember(getCurrentUserID(), member);
   }
 
   signInWithEmailAndPassword(String email, String password) async {
-    await FirebaseAuth.instance
-        .signInWithEmailAndPassword(email: email, password: password);
+    await _auth.signInWithEmailAndPassword(email: email, password: password);
   }
 
   signUserOut() {
-    FirebaseAuth.instance.signOut();
+    _auth.signOut();
   }
 
   String getCurrentUserID() {
-    return auth.currentUser!.uid;
+    return _auth.currentUser!.uid;
   }
 }

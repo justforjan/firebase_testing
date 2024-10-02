@@ -23,7 +23,7 @@ class _CreateGroupState extends State<CreateGroup> {
   final AuthServices _authServices = AuthServices();
   final DatabaseServices _dbServices = DatabaseServices();
 
-  void createGroup() {
+  Future<void> createGroup() async {
     try {
       if (_createGroupFormKey.currentState!.validate()) {
         Group newGroup = Group(
@@ -31,7 +31,7 @@ class _CreateGroupState extends State<CreateGroup> {
             total: 0,
             members: [_authServices.getCurrentUserID()],
             createdOn: Timestamp.now());
-        _dbServices.createGroup(newGroup);
+        await _dbServices.createGroup(newGroup);
         Navigator.pop(context);
         groupNameController.clear();
       }
@@ -59,9 +59,9 @@ class _CreateGroupState extends State<CreateGroup> {
                       if (value == null || value == "") {
                         return "Group name must not be empty";
                       }
-                      // if (value.length < 26) {
-                      //   return "Group names must not be longer than 26 characteres";
-                      // }
+                      if (value.length > 26) {
+                        return "Group names must not be longer than 26 characteres";
+                      }
                       return null;
                     }),
                 addVerticalSpace(10),
