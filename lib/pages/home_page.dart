@@ -46,9 +46,13 @@ class _HomePageState extends State<HomePage> {
                   future: memberSnapshot,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
+                      // here it checks if the snapshot has data
                       if (snapshot.hasData && snapshot.data != null) {
+                        // here it checks if the member actually exists. Perhaps it makes sense to somehow trigger the creation of a new member and then set the state
                         var memberData = snapshot.data?.data();
-                        return Text("Hello ${memberData?.displayName}");
+                        if (memberData != null) {
+                          return Text("Hello ${memberData.displayName}");
+                        }
                       }
                     }
                     return const Text("Hello Unknown");
